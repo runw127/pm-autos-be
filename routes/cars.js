@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var index = require('../controllers/index'); 
+var carsController = require('../controllers/cars'); 
 
 router.get('/', function(req, res, next) {
   res.send('cars api get response');
 });
 
-router.get('/list', index.show);
+router.get('/list', carsController.show);
 
 module.exports = router;
