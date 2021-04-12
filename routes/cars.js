@@ -8,4 +8,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/list', carsController.show);
 
+router.post('/new', carsController.create);
+
 module.exports = router;
