@@ -4,10 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var { getFileStream } = require("./s3");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var carsRouter = require('./routes/cars');
+var salePostsRouter = require('./routes/saleposts');
 
 var app = express();
 
@@ -25,6 +27,15 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/cars', carsRouter);
+app.use('/saleposts', salePostsRouter);
+
+app.get("/images/:key", (req, res) => {
+  const key = req.params.key
+  const readStream = getFileStream(key)
+  console.log("image read stream", readStream)
+
+  readStream.pipe(res);
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
